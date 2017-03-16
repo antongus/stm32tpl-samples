@@ -1,0 +1,6 @@
+[submodule "lib/stm32tpl"]
+	path = lib/stm32tpl
+	url = https://antongus@github.com/antongus/stm32tpl.git
+[submodule "lib/scmRTOS"]
+	path = lib/scmRTOS
+	url = https://github.com/scmrtos/scmrtos.git
