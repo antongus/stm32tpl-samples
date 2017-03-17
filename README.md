@@ -9,8 +9,8 @@ To clone project with submodules use
 `git clone --recursive https://github.com/antongus/stm32tpl-samples.git`
 
 ### Prerequisites:
-- GCC cross-compiler for ARM Cortex-M3 controllers (I use [gcc-arm-embedded][2]);
-- st-flash tool from [texane/stlink][3] on linux, or
+- GCC cross-compiler for ARM Cortex-M3 controllers (I use [gcc-arm-embedded][toolchain]);
+- st-flash tool from [texane/stlink][stlink] on linux, or
 - ST-LINK_CLI utility from ST on Windows.
 
 ### Build and flash instructions:
@@ -23,3 +23,5 @@ Just import Eclipse project and select `build` and `program` from "make targets"
 
 [scmrtos]: https://github.com/scmrtos/scmrtos
 [stm32tpl]: https://github.com/antongus/stm32tpl
+[stlink]: https://github.com/texane/stlink
+[toolchain]: https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads
