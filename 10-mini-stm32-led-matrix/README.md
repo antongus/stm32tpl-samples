@@ -7,7 +7,7 @@ Project uses [scmRTOS][scmrtos] embedded operating system and [stm32tpl][stm32tp
 ### Hardware used
 
    * mini-stm32 development board from aliexpress
-   * LED matrix module from aliexpress (8*32 dots, 4*MAX7219 in chain)
+   * LED matrix module from aliexpress (8x32 dots, 4xMAX7219 in chain)
    * st-link for flashing
 
 ### Module picture:
