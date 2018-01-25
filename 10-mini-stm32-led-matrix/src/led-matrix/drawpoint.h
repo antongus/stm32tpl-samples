@@ -27,13 +27,13 @@ struct DrawPoint
 	DrawPoint<T>& operator+=(const DrawPoint<T>& other)
 	{
 		col += other.col;
-		row += col.row;
+		row += other.row;
 		return *this;
 	}
 	DrawPoint<T>& operator-=(const DrawPoint<T>& other)
 	{
 		col -= other.col;
-		row -= col.row;
+		row -= other.row;
 		return *this;
 	}
 };
