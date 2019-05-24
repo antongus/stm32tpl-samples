@@ -4,3 +4,6 @@
 [submodule "lib/scmRTOS"]
 	path = lib/scmRTOS
 	url = https://github.com/scmrtos/scmrtos.git
+[submodule "lib/libopencm3"]
+	path = lib/libopencm3
+	url = https://github.com/libopencm3/libopencm3.git
