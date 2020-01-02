@@ -14,7 +14,6 @@
 #include "util.h"
 #include "usb-channel.h"
 
-
 namespace OS
 {
 	template <>
