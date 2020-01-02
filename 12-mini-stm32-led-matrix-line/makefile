@@ -45,6 +45,7 @@
 
 # compiler defines
 	DEFS		= -D$(CHIP)
+	DEFS		+= -DSTM32F1
 	DEFS		+= -DVER_MAJOR=$(VER_MAJOR)
 	DEFS		+= -DVER_MINOR=$(VER_MINOR)
 	DEFS		+= -DHSE_VALUE=$(HSE_VALUE)
@@ -75,7 +76,7 @@ endif
 	DOXYGEN		= doxygen
 	RM			= rm -f
 	CP			= cp
-	MD			= mkdir
+	MD			= mkdir -p
 
 
 # dirs
@@ -100,7 +101,7 @@ endif
 # scmRTOS dir
 	SCMDIR		= ../lib/scmRTOS
 # lib dir
-	LIBDIR		= ../lib/stm32tpl
+	LIBDIR		= ../lib
 
 
 # source directories (all *.c, *.cpp and *.S files from this dirs are included in build)
@@ -110,9 +111,11 @@ endif
 	DIRS	+= $(SRCDIR)/startup/$(CHIP)
 	DIRS	+= $(SRCDIR)/terminal
 	DIRS	+= $(SRCDIR)/led-matrix
+	DIRS	+= $(SRCDIR)/usb
 
-	DIRS	+= $(LIBDIR)
-	DIRS	+= $(LIBDIR)/CMSIS
+	DIRS	+= $(LIBDIR)/stm32tpl
+	DIRS	+= $(LIBDIR)/stm32tpl/CMSIS
+	DIRS	+= $(LIBDIR)/libopencm3/include
 	
 	DIRS	+= $(SCMDIR)/core
 	DIRS	+= $(SCMDIR)/port/cortex/mx-gcc
@@ -134,6 +137,11 @@ endif
 	OBJS	:= $(OBJS:.c=.o)
 	OBJS	:= $(OBJS:.S=.o)
 	OBJS	:= $(patsubst %, $(OBJDIR)/%, $(OBJS))
+	
+#libs
+	LIBOPENCM32DIR := $(LIBDIR)/libopencm3
+	LIBOPENCM32 := $(LIBOPENCM32DIR)/lib/libopencm3_stm32f1.a 
+	LIBS	:= $(LIBOPENCM32) 
 
 # flags
 	FLAGS	= -mcpu=$(MCU) -mthumb
@@ -240,6 +248,10 @@ build:
 	$(MAKE) clean
 	$(MAKE) all
 
+$(LIBOPENCM32):
+	@echo --- making libopencm32...
+	$(MAKE) -C $(LIBOPENCM32DIR)
+
 $(LSS): $(ELF) makefile
 	@echo --- making asm-lst...
 #	@$(OBJDUMP) -dStC $(ELF) > $(LSS)
@@ -247,7 +259,7 @@ $(LSS): $(ELF) makefile
 
 $(ELF):	$(OBJS) $(LIBS) makefile
 	@echo --- linking...
-	$(LD) $(OBJS) $(LD_FLAGS) -o "$(ELF)"
+	$(LD) $(OBJS) $(LIBS) $(LD_FLAGS) -o "$(ELF)"
 
 $(HEX): $(ELF) makefile
 	@echo --- make hex...

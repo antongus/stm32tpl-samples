@@ -9,10 +9,11 @@
 #include "hw.h"
 #include "scmRTOS.h"
 #include "commands.h"
+#include "processes.h"
 #include "vars.h"
 #include "util.h"
+#include "usb-channel.h"
 
-using DebugTerminalProcess  = OS::process<OS::pr2, 1200>;
 
 namespace OS
 {
@@ -24,16 +25,19 @@ namespace OS
 		startEvent.wait();
 		for (;;)
 		{
-			uart << "=>";
-			uart.Gets(buf, 60);
+			if (!usbChannel.isConfigured())
+			{
+				OS::sleep(10);
+				continue;
+			}
+			usbChannel << "=>";
+			usbChannel.Gets(buf, 60);
 			if (*buf)
 			{
-				if (!Interpreter::parse(buf, uart))
-					uart << "ERR";
-				uart << "\r\n";
+				if (!Interpreter::parse(buf, usbChannel))
+					usbChannel << "ERR";
+				usbChannel << "\r\n";
 			}
 		}
 	}
 }
-
-DebugTerminalProcess debugTerminalProcess;

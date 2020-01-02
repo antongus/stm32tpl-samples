@@ -82,7 +82,7 @@ typedef uint_fast32_t tick_count_t;
 //    stack usage information and information about the object that process is waiting for.
 //
 //
-#define scmRTOS_DEBUG_ENABLE                0
+#define scmRTOS_DEBUG_ENABLE                1
 
 //-----------------------------------------------------------------------------
 //

@@ -174,11 +174,11 @@ extern const char font7x5_ru[];
 template <uint32_t width, uint32_t height>
 void DrawBuffer<width, height>::PutColumn(Point& point, uint8_t b)
 {
-	uint32_t mask = 1 << 7;
+	uint32_t mask = 0x01;
 	for (auto row = 0u; row < 8; ++row)
 	{
 		SetPixel(Point(point.col, point.row + row), b & mask);
-		mask >>= 1;
+		mask <<= 1;
 	}
 }
 
@@ -197,12 +197,8 @@ void DrawBuffer<width, height>::PutChar(Point& point, char ch)
 	int pos = charPos(ch);
 	for (ch = 5; ch; ch--)
 	{
-		char mask = font7x5_ru[pos++];
-		if (mask)
-		{
-			PutColumn(point, mask);
-			++point.col;
-		}
+		PutColumn(point, font7x5_ru[pos++]);
+		++point.col;
 	}
 	PutColumn(point, 0);
 	++point.col;

@@ -8,8 +8,7 @@
 *  Copyright © 2017 Anton B. Gusev aka AHTOXA
 **/
 
-#ifndef PROCESSES_H_INCLUDED
-#define PROCESSES_H_INCLUDED
+#pragma once
 
 #include "scmRTOS.h"
 
@@ -19,8 +18,11 @@ using LedMatrixProcess      = OS::process<OS::pr0, 600>;
 /// LED flasher process
 using LedFlasherProcess      = OS::process<OS::pr1, 200>;
 
+/// Debug terminal process
+using DebugTerminalProcess  = OS::process<OS::pr2, 1200>;
+
+
 /// declaration of processes objects
 extern LedMatrixProcess ledMatrixProcess;
 extern LedFlasherProcess ledFlasherProcess;
-
-#endif // PROCESSES_H_INCLUDED
+extern DebugTerminalProcess debugTerminalProcess;

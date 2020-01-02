@@ -6,12 +6,14 @@
 *  Copyright © 2017 Anton B. Gusev aka AHTOXA
 **/
 
-#ifndef HW_H_INCLUDED
-#define HW_H_INCLUDED
+#pragma once
 
 #include "stm32.h"
 #include "pin.h"
 #include "scmRTOS.h"
+
+/// LED indicator pin.
+using LedPin = Pin<'C', 13, 'L'>;
 
 /**
  * Start event. Signaled when initialization done
@@ -48,5 +50,3 @@ using ConsoleUart = STM32::UART::Uart<ConsoleUartProps>;
 
 /// Console (debug) UART variable declaration
 extern ConsoleUart uart;
-
-#endif // HW_H_INCLUDED
