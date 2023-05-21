@@ -10,7 +10,6 @@
 #include <libopencm3/usb/usbd.h>
 #include <libopencm3/usb/cdc.h>
 #include <libopencm3/usb/dwc/otg_fs.h>
-#include <libopencm3/cm3/scb.h>
 #include "cdcacm.h"
 
 static usbd_device* device;
@@ -213,19 +212,6 @@ static void cdcacm_reset_cb()
 	cdcResetEvent();
 }
 
-static void cdcacm_suspend_cb()
-{
-	configured = 0;
-//	*USB_CNTR_REG |= USB_CNTR_FSUSP;
-	cdcSuspendEvent();
-}
-
-static void cdcacm_resume_cb()
-{
-//	*USB_CNTR_REG &= ~USB_CNTR_FSUSP;
-	cdcResumeEvent();
-}
-
 static void cdcacm_set_config(usbd_device *usbd_dev, uint16_t wValue)
 {
 	(void)wValue;
@@ -242,8 +228,6 @@ static void cdcacm_set_config(usbd_device *usbd_dev, uint16_t wValue)
 
 	usbd_register_sof_callback(usbd_dev, cdcacm_sof_cb);
 	usbd_register_reset_callback(usbd_dev, cdcacm_reset_cb);
-//	usbd_register_suspend_callback(usbd_dev, cdcacm_suspend_cb);
-//	usbd_register_resume_callback(usbd_dev, cdcacm_resume_cb);
 }
 
 int cdcAcmSendData(char * buf, int size)
