@@ -66,10 +66,10 @@ static void halt()
 	for (;;)
 	{
 		LedPin::On();
-		for (auto i = 0; i < 10000000; ++i)
+		for (auto i = 0; i < 1000000; ++i)
 			__asm__ __volatile__ ("nop");
 		LedPin::Off();
-		for (auto i = 0; i < 10000000; ++i)
+		for (auto i = 0; i < 4000000; ++i)
 			__asm__ __volatile__ ("nop");
 	}
 }
@@ -81,23 +81,21 @@ void ffTest()
 
 	tracer::trace("\r\n Power on...");
 	SdCardPower::On();
-	OS::sleep(2000); // some SD cards performs looong initialization when powered on
+	OS::sleep(200); // some SD cards performs looong initialization when powered on
 
 	for (auto i = 0; i < 10; ++i)
 	{
 		tracer::trace("\r\n Initializing SD card (attempt {})...",i);
 		if (SdCard::init())
 			break;
-		SdCardPower::Off();
-		OS::sleep(50);
-		SdCardPower::On();
-		OS::sleep(100);
+		OS::sleep(10);
 	}
 	if (SdCard::getState() != STM32::SD::CardState::Ready)
 	{
 		tracer::trace("\r\nCould not initialize SD card.");
 		halt();
 	}
+	SdCard::report();
 
 	tracer::trace("\r\n Mounting card...");
 	if (auto ret = f_mount(&fatFs, "0:", 1); ret != FR_OK)
@@ -122,7 +120,6 @@ void ffTest()
 	tracer::trace("\r\n Appending text to file in root dir...");
 	if (!appendTextToFile())
 	{
-		tracer::trace("\r\n append error");
 		halt();
 	}
 
@@ -150,13 +147,12 @@ void ffTest()
 
 	for (auto i = 0; i < 100; ++i)
 	{
-		OS::sleep(10'000);
 		tracer::trace("\r\n Appending text to file in DIR1...");
 		if (!appendTextToFile())
 		{
-			tracer::trace("\r\n append error");
 			halt();
 		}
+		OS::sleep(10'000);
 	}
 
 

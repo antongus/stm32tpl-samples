@@ -29,7 +29,8 @@ struct SdioCoreProps
 	static constexpr auto dmaInterruptPrioGroup  {2};
 	static constexpr auto dmaInterruptSubprio    {2};
 
-	static constexpr auto commandTimeout {20'000'000u};
+	static constexpr auto hiSpeedDivisor {4};
+	static constexpr auto commandTimeout {2'000'000u};
 
 	static constexpr auto debugTrace {(Trace::flags & Trace::Sdio) != 0};
 
