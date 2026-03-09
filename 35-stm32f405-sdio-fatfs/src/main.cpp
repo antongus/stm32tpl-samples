@@ -10,7 +10,7 @@
 #include "scmRTOS.h"
 
 /// LED flasher process
-using FatfsTestProcess      = OS::process<OS::pr0, 1200>;
+using FatfsTestProcess      = OS::process<OS::pr0, 20000>;
 using LedFlasherProcess     = OS::process<OS::pr1, 1200>;
 
 FatfsTestProcess fatfsTestProcess;
